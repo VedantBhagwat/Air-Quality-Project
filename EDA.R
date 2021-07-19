@@ -246,3 +246,41 @@ Wicklow_Bray_ozone_hourly <- read.csv("../AQ data/Hourly/Wicklow_Bray_ozone_hour
 View(Wicklow_Bray_ozone_hourly)
 str(Wicklow_Bray_ozone_hourly)
 summary(Wicklow_Bray_ozone_hourly)
+
+#################################################################
+
+# Choose the year for which data should be taken into consideration.
+hourly_data <- read.csv("Hourly data.csv")
+attach(hourly_data)
+View(hourly_data)
+
+str(hourly_data)
+
+# Convert air pollutants into factors
+# hourly_data$Start <- factor(Start)
+# hourly_data$Finish <- factor(Finish)
+
+hourly_data$SO2 <- factor(SO2)
+hourly_data$CO <- factor(CO)
+hourly_data$NOx <- factor(NOx)
+hourly_data$Ozone <- factor(Ozone)
+
+summary(hourly_data)
+
+hist(Start)
+hist(Finish)
+
+library(ggplot2)
+ggplot(hourly_data, aes(x=Finish))+ geom_histogram() +
+  stat_bin(aes(y=..count.., label=..count..), geom="text", vjust=-.5) 
+
+
+
+
+
+
+
+
+
+
+
