@@ -9,15 +9,13 @@ X2018_Hourly_NO_for_UCC <- data.frame(X2018_Hourly_NO_for_UCC)
 
 # Convert string date to Date object
 colnames(X2018_Hourly_NO_for_UCC)[1] <- "Date"
-X2018_Hourly_NO_for_UCC$Date <- as.Date(X2018_Hourly_NO_for_UCC$Date)
+X2018_Hourly_NO_for_UCC$Date <- strptime(X2018_Hourly_NO_for_UCC$Date, format="%d/%m/%Y %H:%M")
 
-# Convert character numbers into double and replace NA values with mean
+# Convert character numbers into double 
 for(i in 2:ncol(X2018_Hourly_NO_for_UCC)){
   X2018_Hourly_NO_for_UCC[,i] <- as.double(X2018_Hourly_NO_for_UCC[,i])
   # X2018_Hourly_NO_for_UCC[is.na(X2018_Hourly_NO_for_UCC[,i]), i] <- mean(X2018_Hourly_NO_for_UCC[,i], na.rm = TRUE)
 }
-
-# X2018_Hourly_NO_for_UCC$Castlebar <- as.double(X2018_Hourly_NO_for_UCC$Castlebar)
 
 # Check NA values
 missing_data_NO_2018 <- data.frame("Station"=colnames(X2018_Hourly_NO_for_UCC[,-1]), "value"=colSums(is.na(X2018_Hourly_NO_for_UCC[,-1])))
@@ -44,15 +42,12 @@ X2019_Hourly_NO_for_UCC <- data.frame(X2019_Hourly_NO_for_UCC)
 
 # Convert string date to Date object
 colnames(X2019_Hourly_NO_for_UCC)[1] <- "Date"
-X2019_Hourly_NO_for_UCC$Date <- as.Date(X2019_Hourly_NO_for_UCC$Date)
+X2019_Hourly_NO_for_UCC$Date <- strptime(X2019_Hourly_NO_for_UCC$Date, format="%d/%m/%Y %H:%M")
 
-# Convert character numbers into double and replace NA values with mean
+# Convert character numbers into double 
 for(i in 2:ncol(X2019_Hourly_NO_for_UCC)){
   X2019_Hourly_NO_for_UCC[,i] <- as.double(X2019_Hourly_NO_for_UCC[,i])
-  # X2019_Hourly_NO_for_UCC[is.na(X2019_Hourly_NO_for_UCC[,i]), i] <- mean(X2019_Hourly_NO_for_UCC[,i], na.rm = TRUE)
 }
-
-# X2019_Hourly_NO_for_UCC$Castlebar <- as.double(X2019_Hourly_NO_for_UCC$Castlebar)
 
 # Check NA values
 missing_data_NO_2019 <- data.frame("Station"=colnames(X2019_Hourly_NO_for_UCC[,-1]), "value"=colSums(is.na(X2019_Hourly_NO_for_UCC[,-1])))
@@ -72,21 +67,19 @@ str(X2019_Hourly_NO_for_UCC)
 str(X2020_Hourly_NO_for_UCC)
 
 typeof(X2020_Hourly_NO_for_UCC)
+
 # Convert data into data frame
 X2020_Hourly_NO_for_UCC <- data.frame(X2020_Hourly_NO_for_UCC)
 
 
 # Convert string date to Date object
 colnames(X2020_Hourly_NO_for_UCC)[1] <- "Date"
-X2020_Hourly_NO_for_UCC$Date <- as.Date(X2020_Hourly_NO_for_UCC$Date)
+X2020_Hourly_NO_for_UCC$Date <- strptime(X2020_Hourly_NO_for_UCC$Date, format="%d/%m/%Y %H:%M")
 
-# Convert character numbers into double and replace NA values with mean
+# Convert character numbers into double 
 for(i in 2:ncol(X2020_Hourly_NO_for_UCC)){
   X2020_Hourly_NO_for_UCC[,i] <- as.double(X2020_Hourly_NO_for_UCC[,i])
-  # X2020_Hourly_NO_for_UCC[is.na(X2020_Hourly_NO_for_UCC[,i]), i] <- mean(X2020_Hourly_NO_for_UCC[,i], na.rm = TRUE)
 }
-
-# X2020_Hourly_NO_for_UCC$Castlebar <- as.double(X2020_Hourly_NO_for_UCC$Castlebar)
 
 # Check NA values
 missing_data_NO_2020 <- data.frame("Station"=colnames(X2020_Hourly_NO_for_UCC[,-1]), "value"=colSums(is.na(X2020_Hourly_NO_for_UCC[,-1])))
@@ -106,10 +99,10 @@ str(X2020_Hourly_NO_for_UCC)
 ## Select columns with the missing data less than 25% ##
 
 X2018_Hourly_NO_for_UCC <- X2018_Hourly_NO_for_UCC[,c(T,(nrow(X2018_Hourly_NO_for_UCC)*0.25 > missing_data_NO_2018$value))]
+# reduced from 23 columns to  7 columns
 
 # fill NA's with mean values
 for(i in 2:ncol(X2018_Hourly_NO_for_UCC)){
-  # X2018_Hourly_NO_for_UCC[is.na(X2018_Hourly_NO_for_UCC[,i]), i] <- mean(X2018_Hourly_NO_for_UCC[,i], na.rm = TRUE)
   X2018_Hourly_NO_for_UCC[is.na(X2018_Hourly_NO_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_NO_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
   X2018_Hourly_NO_for_UCC[,i] <- as.double(X2018_Hourly_NO_for_UCC[,i])
 }
@@ -118,10 +111,10 @@ str(X2018_Hourly_NO_for_UCC)
 
 
 X2019_Hourly_NO_for_UCC <- X2019_Hourly_NO_for_UCC[,c(T,(nrow(X2019_Hourly_NO_for_UCC)*0.25 > missing_data_NO_2019$value))]
+# reduced from 23 columns to 18 columns
 
 # fill NA's with mean values
 for(i in 2:ncol(X2019_Hourly_NO_for_UCC)){
-  # X2019_Hourly_NO_for_UCC[is.na(X2019_Hourly_NO_for_UCC[,i]), i] <- mean(X2019_Hourly_NO_for_UCC[,i], na.rm = TRUE)
   X2019_Hourly_NO_for_UCC[is.na(X2019_Hourly_NO_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_NO_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
   X2019_Hourly_NO_for_UCC[,i] <- as.double(X2019_Hourly_NO_for_UCC[,i])
 }
@@ -130,10 +123,10 @@ str(X2019_Hourly_NO_for_UCC)
 
 ## Select columns with the missing data less than 25% ##
 X2020_Hourly_NO_for_UCC <- X2020_Hourly_NO_for_UCC[,c(T,(nrow(X2020_Hourly_NO_for_UCC)*0.25 > missing_data_NO_2019$value))]
+# reduced from 23 columns to 16 columns
 
 # fill NA's with mean values
 for(i in 2:ncol(X2020_Hourly_NO_for_UCC)){
-  # X2020_Hourly_NO_for_UCC[is.na(X2020_Hourly_NO_for_UCC[,i]), i] <- mean(X2020_Hourly_NO_for_UCC[,i], na.rm = TRUE)
   X2020_Hourly_NO_for_UCC[is.na(X2020_Hourly_NO_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_NO_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
   X2020_Hourly_NO_for_UCC[,i] <- as.double(X2020_Hourly_NO_for_UCC[,i])
 }
@@ -171,17 +164,3 @@ ggplot(gather(X2020_Hourly_NO_for_UCC[,-1]), aes(value)) +
   facet_wrap(~key, scales = 'free_x')
 
 
-
-
-
-
-# as.Date("19-06-2017 16:30:00", format="%d-%m-%y %I:%M:%S")
-# strptime("19-06-2017 16:30:00", format="%d-%m-%Y %H:%M")
-# 
-# data <- read_excel("E:/CIT/Project/AQ data/AAMP/2018 Hourly NO for UCC.xls", 
-#            skip = 2)
-# typeof(data$`Date & Time`)
-# X2020_Hourly_NO_for_UCC$Date
-# data$`Date & Time` <- strptime(data$`Date & Time`, format="%d/%m/%Y %H:%M")
-# X2020_Hourly_NO_for_UCC$Date
-# data$`Date & Time`

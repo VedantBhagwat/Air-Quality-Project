@@ -444,7 +444,7 @@ plot.ts(timeseries)
 # (acf(X2020_Hourly_O3_for_UCC[,"Bray"]))
 
 #######################################
-start.date <- as.POSIXct(strptime('2020-01-01 00:00:00', format="%Y-%m-%d %H:%M:%S"))  # the min from your df
+# start.date <- as.POSIXct(strptime('2020-01-01 00:00:00', format="%Y-%m-%d %H:%M:%S"))  # the min from your df
 # dat <- data.frame(
 #   timestamp=as.POSIXct(seq.POSIXt(from=start.date, by="hour", length.out=4287)),
 #   Bray=X2020_Hourly_O3_for_UCC$Bray)
@@ -452,9 +452,9 @@ start.date <- as.POSIXct(strptime('2020-01-01 00:00:00', format="%Y-%m-%d %H:%M:
 # library(plotly)
 # plot_ly(dat, x=timestamp, y=dat$Bray, text="Bray", type='scatter')
 
-library(zoo)
-new_dat <- zoo(X2020_Hourly_O3_for_UCC$Bray, as.POSIXct(seq.POSIXt(from=start.date, by="hour", length.out=length(X2020_Hourly_O3_for_UCC$Bray))))
-# plot.ts(new_dat)
-autoplot(new_dat)+xlab("days")+ylab("Values in ppm")
+# library(zoo)
+# new_dat <- zoo(X2020_Hourly_O3_for_UCC$Bray, as.POSIXct(seq.POSIXt(from=start.date, by="hour", length.out=length(X2020_Hourly_O3_for_UCC$Bray))))
+# # plot.ts(new_dat)
+# autoplot(new_dat)+xlab("days")+ylab("Values in ppm")
 
 
