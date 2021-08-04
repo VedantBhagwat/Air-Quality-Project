@@ -434,7 +434,14 @@ timeseries <- ts(X2020_Hourly_O3_for_UCC$Bray, frequency=12, start=c(2020,1))
 # View(timeseries)
 plot.ts(timeseries)
 
-
+# Plot hourly data with xts package
+# library(xts)
+# X2020_Hourly_O3_for_UCC$starttime <- strptime(X2020_Hourly_O3_for_UCC$Date, "%d.%m.%Y %H:%M")
+# hnew_dataxts <- xts(X2020_Hourly_O3_for_UCC[,"Bray"], order.by=X2020_Hourly_O3_for_UCC[,"Date"])
+# 
+# plot(hnew_dataxts)
+# 
+# (acf(X2020_Hourly_O3_for_UCC[,"Bray"]))
 
 #######################################
 start.date <- as.POSIXct(strptime('2020-01-01 00:00:00', format="%Y-%m-%d %H:%M:%S"))  # the min from your df

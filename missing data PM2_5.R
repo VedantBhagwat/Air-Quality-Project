@@ -103,3 +103,44 @@ md_PM2_5_2020 +
 
 str(X2020_Hourly_PM2_5_for_UCC)
 
+
+
+## Select columns with the missing data less than 25% ##
+
+X2018_Hourly_PM2_5_for_UCC <- X2018_Hourly_PM2_5_for_UCC[,c(T,(nrow(X2018_Hourly_PM2_5_for_UCC)*0.25 > missing_data_PM2_5_2018$value))]
+
+# fill NA's with mean values
+for(i in 2:ncol(X2018_Hourly_PM2_5_for_UCC)){
+  # X2018_Hourly_PM2_5_for_UCC[is.na(X2018_Hourly_PM2_5_for_UCC[,i]), i] <- mean(X2018_Hourly_PM2_5_for_UCC[,i], na.rm = TRUE)
+  X2018_Hourly_PM2_5_for_UCC[is.na(X2018_Hourly_PM2_5_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_PM2_5_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+  X2018_Hourly_PM2_5_for_UCC[,i] <- as.double(X2018_Hourly_PM2_5_for_UCC[,i])
+}
+
+str(X2018_Hourly_PM2_5_for_UCC)
+
+
+X2019_Hourly_PM2_5_for_UCC <- X2019_Hourly_PM2_5_for_UCC[,c(T,(nrow(X2019_Hourly_PM2_5_for_UCC)*0.25 > missing_data_PM2_5_2019$value))]
+
+# fill NA's with mean values
+for(i in 2:ncol(X2019_Hourly_PM2_5_for_UCC)){
+  # X2019_Hourly_PM2_5_for_UCC[is.na(X2019_Hourly_PM2_5_for_UCC[,i]), i] <- mean(X2019_Hourly_PM2_5_for_UCC[,i], na.rm = TRUE)
+  X2019_Hourly_PM2_5_for_UCC[is.na(X2019_Hourly_PM2_5_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_PM2_5_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+  X2019_Hourly_PM2_5_for_UCC[,i] <- as.double(X2019_Hourly_PM2_5_for_UCC[,i])
+}
+
+str(X2019_Hourly_PM2_5_for_UCC)
+
+## Select columns with the missing data less than 25% ##
+X2020_Hourly_PM2_5_for_UCC <- X2020_Hourly_PM2_5_for_UCC[,c(T,(nrow(X2020_Hourly_PM2_5_for_UCC)*0.25 > missing_data_PM2_5_2019$value))]
+
+# fill NA's with mean values
+for(i in 2:ncol(X2020_Hourly_PM2_5_for_UCC)){
+  # X2020_Hourly_PM2_5_for_UCC[is.na(X2020_Hourly_PM2_5_for_UCC[,i]), i] <- mean(X2020_Hourly_PM2_5_for_UCC[,i], na.rm = TRUE)
+  X2020_Hourly_PM2_5_for_UCC[is.na(X2020_Hourly_PM2_5_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_PM2_5_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+  X2020_Hourly_PM2_5_for_UCC[,i] <- as.double(X2020_Hourly_PM2_5_for_UCC[,i])
+}
+str(X2020_Hourly_PM2_5_for_UCC)
+
+sum(is.na.data.frame(X2018_Hourly_PM2_5_for_UCC)) # 192645, 0
+sum(is.na.data.frame(X2019_Hourly_PM2_5_for_UCC)) # 92303, 0
+sum(is.na.data.frame(X2020_Hourly_PM2_5_for_UCC)) # 6589, 0

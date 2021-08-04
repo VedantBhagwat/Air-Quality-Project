@@ -68,8 +68,6 @@ md_NO_2019 +
 str(X2019_Hourly_NO_for_UCC)
 
 
-
-
 ########### 2020 NO
 str(X2020_Hourly_NO_for_UCC)
 
@@ -102,3 +100,88 @@ md_NO_2020 +
   ggtitle("Missing data of NO in 2020")
 
 str(X2020_Hourly_NO_for_UCC)
+
+
+
+## Select columns with the missing data less than 25% ##
+
+X2018_Hourly_NO_for_UCC <- X2018_Hourly_NO_for_UCC[,c(T,(nrow(X2018_Hourly_NO_for_UCC)*0.25 > missing_data_NO_2018$value))]
+
+# fill NA's with mean values
+for(i in 2:ncol(X2018_Hourly_NO_for_UCC)){
+  # X2018_Hourly_NO_for_UCC[is.na(X2018_Hourly_NO_for_UCC[,i]), i] <- mean(X2018_Hourly_NO_for_UCC[,i], na.rm = TRUE)
+  X2018_Hourly_NO_for_UCC[is.na(X2018_Hourly_NO_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_NO_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+  X2018_Hourly_NO_for_UCC[,i] <- as.double(X2018_Hourly_NO_for_UCC[,i])
+}
+
+str(X2018_Hourly_NO_for_UCC)
+
+
+X2019_Hourly_NO_for_UCC <- X2019_Hourly_NO_for_UCC[,c(T,(nrow(X2019_Hourly_NO_for_UCC)*0.25 > missing_data_NO_2019$value))]
+
+# fill NA's with mean values
+for(i in 2:ncol(X2019_Hourly_NO_for_UCC)){
+  # X2019_Hourly_NO_for_UCC[is.na(X2019_Hourly_NO_for_UCC[,i]), i] <- mean(X2019_Hourly_NO_for_UCC[,i], na.rm = TRUE)
+  X2019_Hourly_NO_for_UCC[is.na(X2019_Hourly_NO_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_NO_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+  X2019_Hourly_NO_for_UCC[,i] <- as.double(X2019_Hourly_NO_for_UCC[,i])
+}
+
+str(X2019_Hourly_NO_for_UCC)
+
+## Select columns with the missing data less than 25% ##
+X2020_Hourly_NO_for_UCC <- X2020_Hourly_NO_for_UCC[,c(T,(nrow(X2020_Hourly_NO_for_UCC)*0.25 > missing_data_NO_2019$value))]
+
+# fill NA's with mean values
+for(i in 2:ncol(X2020_Hourly_NO_for_UCC)){
+  # X2020_Hourly_NO_for_UCC[is.na(X2020_Hourly_NO_for_UCC[,i]), i] <- mean(X2020_Hourly_NO_for_UCC[,i], na.rm = TRUE)
+  X2020_Hourly_NO_for_UCC[is.na(X2020_Hourly_NO_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_NO_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+  X2020_Hourly_NO_for_UCC[,i] <- as.double(X2020_Hourly_NO_for_UCC[,i])
+}
+str(X2020_Hourly_NO_for_UCC)
+
+sum(is.na.data.frame(X2018_Hourly_NO_for_UCC)) # 0
+sum(is.na.data.frame(X2019_Hourly_NO_for_UCC)) # 0
+sum(is.na.data.frame(X2020_Hourly_NO_for_UCC)) # 0
+
+
+
+
+
+
+########### Histogram of all stations ################
+
+# library(Hmisc)
+# dev.new()
+# hist.data.frame(X2019_Hourly_NO_for_UCC[,-1])
+
+library(tidyr)
+X2018_Hourly_NO_for_UCC %>% gather() %>% head()
+ggplot(gather(X2018_Hourly_NO_for_UCC[,-1]), aes(value)) + 
+  geom_histogram(bins = 10) + 
+  facet_wrap(~key, scales = 'free_x')
+
+X2019_Hourly_NO_for_UCC %>% gather() %>% head()
+ggplot(gather(X2019_Hourly_NO_for_UCC[,-1]), aes(value)) + 
+  geom_histogram(bins = 10) + 
+  facet_wrap(~key, scales = 'free_x')
+
+X2020_Hourly_NO_for_UCC %>% gather() %>% head()
+ggplot(gather(X2020_Hourly_NO_for_UCC[,-1]), aes(value)) + 
+  geom_histogram(bins = 10) + 
+  facet_wrap(~key, scales = 'free_x')
+
+
+
+
+
+
+# as.Date("19-06-2017 16:30:00", format="%d-%m-%y %I:%M:%S")
+# strptime("19-06-2017 16:30:00", format="%d-%m-%Y %H:%M")
+# 
+# data <- read_excel("E:/CIT/Project/AQ data/AAMP/2018 Hourly NO for UCC.xls", 
+#            skip = 2)
+# typeof(data$`Date & Time`)
+# X2020_Hourly_NO_for_UCC$Date
+# data$`Date & Time` <- strptime(data$`Date & Time`, format="%d/%m/%Y %H:%M")
+# X2020_Hourly_NO_for_UCC$Date
+# data$`Date & Time`
