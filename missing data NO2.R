@@ -137,8 +137,21 @@ boxplot(X2019_Hourly_NO2_for_UCC[,-1])
 # Some negative values present in 2018 and 2019
 boxplot(X2020_Hourly_NO2_for_UCC[,-1])
 
+test_2018_Hourly_NO2_for_UCC <- X2018_Hourly_NO2_for_UCC
+
+X2018_Hourly_NO2_for_UCC[X2018_Hourly_NO2_for_UCC$Dundalk>150,]
 
 
+
+
+test_2018_Hourly_NO2_for_UCC[5748,5] <- NA
+test_2018_Hourly_NO2_for_UCC[2411,2] <- NA
+
+summary(test_2018_Hourly_NO2_for_UCC)
+
+boxplot(test_2018_Hourly_NO2_for_UCC[,-1])
+
+test_2018_Hourly_NO2_for_UCC[5748,]
 # Check number of NA's
 sum(is.na.data.frame(X2018_Hourly_NO2_for_UCC)) # 2808
 sum(is.na.data.frame(X2019_Hourly_NO2_for_UCC)) # 6162
