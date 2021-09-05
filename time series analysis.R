@@ -5,6 +5,21 @@ library(timetk)
 library(imputeTS)
 library(ggplot2)
 
+NO2_copy <- NO2
+# Date19 <- seq(as.POSIXct("2019-01-01 00:00:00"), as.POSIXct("2019-12-31 24:00:00"), by="hour")
+# Date20 <- seq(as.POSIXct("2020-01-01 00:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+# Date <- seq(as.POSIXct("2019-01-01 00:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+NO2_copy$Date2 <- seq(as.POSIXct("2019-01-01 00:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+which(duplicated(NO2_copy$Date)) # 10874
+NO2_copy$Date[duplicated(NO2_copy$Date)] # "2020-03-29 01:00:00"
+# match(NO2_copy$Date,"2020-03-29 01:00:00")
+
+which(duplicated(NO$Date))
+
+# data.frame(V1_V2=union(NO2_copy$Date, Date))
+# library(dplyr)
+# setdiff(NO2_copy$Date,Date)
+
 # Setup for the plotly charts (# FALSE returns ggplots)
 interactive <- FALSE
 

@@ -7,32 +7,44 @@ library(forecast) # auto.arima
 
 summary(NO2_clone)
 
-require(xts)
-require(forecast)
+library(xts)
+library(forecast)
+library(TSstudio)
+library(timetk)
 
-time_index <- seq(from = as.POSIXct("2019-01-01 00:00"), 
-                  to = as.POSIXct("2020-06-26 23:00"), by = "hour")
+# time_index <- seq(from = as.POSIXct("2019-01-01 00:00"), 
+                  # to = as.POSIXct("2020-06-26 23:00"), by = "hour")
 # set.seed(1)
 # value <- rnorm(n = length(time_index))
 # nrow(time_index)
 # eventdata <- xts(value, order.by = time_index)
 # ets(eventdata)
 # autoplot(eventdata)
-NO2_clone <- NO2_clone[-c(13033 : 13048),]
 
-NO2_ts <- xts(NO2_clone$Rathmines, order.by = time_index)
+# NO2_clone <- NO2_clone[-c(13033 : 13048),]
+
+# NO2_ts <- xts(NO2_clone$Rathmines, order.by = time_index)
 
 # Daily
-NO2_ts <- ts(NO2_clone$Rathmines, freq=24)
+NO2_ts <- ts(NO2_clone$Rathmines)
+ts_info(NO2_ts)
 
 # NO2_ts <- zoo(
 #   x         = NO2_clone$Rathmines,
-#   order.by  = NO2_clone$Date
-#   # frequency = 24
+#   order.by  = NO2_clone$Date,
+#   frequency = 24*365
 # )
+# Warning message:
+#   In zoo(x = NO2_clone$Rathmines, order.by = NO2_clone$Date) :
+#   some methods for “zoo” objects do not work if the index entries in ‘order.by’ are not unique
+
+anyDuplicated(NO2_clone$Date)
+sum(duplicated(NO2_clone$Date))
+# NO2_clone <- NO2_clone[-8762,]
 
 # NO2_ts <- ts(NO2_ts)
 autoplot(NO2_ts , main="Hourly data of Rathmines")
+
 NO2 %>% 
   plot_time_series(as.Date(Date), Rathmines, 
                    .interactive = interactive,
@@ -54,7 +66,7 @@ autoplot(NO2.mul)
 # Movin Average
 library(forecast)
 plot(NO2_ts)
-sm <- ma(NO2_ts, order = 12)
+sm <- ma(NO2_ts, order = 24*30)
 lines(sm, col = "red")
 
 # seasonal() extrae la componente estacional.
@@ -105,7 +117,7 @@ NO2_ts %>% stlf(method='naive') %>%
 # SES
 library(fpp2)
 ?window
-fc <- ses(NO2_ts, h = 5)
+fc <- ses(NO2_ts, h = 24*30)
 
 autoplot(fc) +
   autolayer(fitted(fc), series="Fitted") +
@@ -124,13 +136,15 @@ window(NO2_ts) %>%
 
 
 # Fit three models
-# NO2_ts2 <- window(NO2_ts)
-# fit1 <- ses(NO2_ts2)
+
+# NO2_ts2 <- window(NO2_ts, start=as.Date("2019-01-01 00:00"), end=as.Date("2020-06-26 23:00"))
+NO2_ts2 <- window(NO2_ts)
+fit1 <- ses(NO2_ts2)
 # fit2 <- holt(NO2_ts2)
 # fit3 <- holt(NO2_ts2, damped = TRUE)
 # 
 # # Compare models (*training RMSE*)
-# accuracy(fit1, NO2_ts2)
+accuracy(fit1, NO2_ts2)
 # accuracy(fit2, NO2_ts2)
 # accuracy(fit3, NO2_ts2)
 # 
@@ -175,8 +189,8 @@ p1
 
 
 ## HW damped
-fc <- hw(subset(NO2_ts,end=length(NO2_ts)-35),
-         damped = TRUE, seasonal="multiplicative", h=35)
+fc <- hw(subset(NO2_ts,end=length(NO2_ts)-(24*15)),
+         damped = TRUE, seasonal="multiplicative", h=24*15)
 autoplot(NO2_ts) +
   autolayer(fc, series="HW multi damped", PI=FALSE)+
   guides(colour=guide_legend(title="Daily forecasts"))

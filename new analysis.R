@@ -1,3 +1,5 @@
+nrow(X2019_Hourly_NO2_for_UCC) + nrow(X2020_Hourly_NO2_for_UCC)
+
 # Combine 2019 and 2020 data
 NO2 <- rbind(X2019_Hourly_NO2_for_UCC, X2020_Hourly_NO2_for_UCC)
 
@@ -9,7 +11,7 @@ PM2_5 <- rbind(X2019_Hourly_PM2_5_for_UCC, X2020_Hourly_PM2_5_for_UCC)
 
 PM10 <- rbind(X2019_Hourly_PM10_for_UCC, X2020_Hourly_PM10_for_UCC)
 
-# Go to data type conversion file
+###### Go to data type conversion file ######
 
 # Change the data types of data frame and plot missing data
 # 
@@ -126,16 +128,16 @@ hist(NO2$Rathmines)
 hist(NO2$Waterford)
 
 hist(log(NO2$Limerick.Peoples.Park))
-hist(log(NO2$Rathmines))=
+hist(log(NO2$Rathmines))
 hist(log(NO2$Waterford))
 
-cor(NO$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
-# 0.6842223
-cor(O3$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
-# -0.6622431
-cor(PM2_5$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
-# 0.5556335
-cor(PM10$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
-# 0.5556464
+# cor(NO$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
+# # 0.6842223
+# cor(O3$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
+# # -0.6622431
+# cor(PM2_5$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
+# # 0.5556335
+# cor(PM10$Limerick.Peoples.Park, NO2$Limerick.Peoples.Park,use = "complete.obs")
+# # 0.5556464
 
 

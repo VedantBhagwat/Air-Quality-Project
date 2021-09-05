@@ -1,3 +1,8 @@
+Date19 <- seq(as.POSIXct("2019-01-01 00:00:00"), as.POSIXct("2019-12-31 24:00:00"), by="hour")
+Date20 <- seq(as.POSIXct("2020-01-01 00:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+Date <- seq(as.POSIXct("2018-12-31 24:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+
+
 ########### 2018 NO2
 library(ggplot2)
 
@@ -43,7 +48,8 @@ X2019_Hourly_NO2_for_UCC <- data.frame(X2019_Hourly_NO2_for_UCC)
 
 # Convert string date to Date object
 colnames(X2019_Hourly_NO2_for_UCC)[1] <- "Date"
-X2019_Hourly_NO2_for_UCC$Date <- strptime(X2019_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
+X2019_Hourly_NO2_for_UCC$Date <- Date19
+# strptime(X2019_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
 
 # Convert character numbers into double 
 for(i in 2:ncol(X2019_Hourly_NO2_for_UCC)){
@@ -75,7 +81,8 @@ X2020_Hourly_NO2_for_UCC <- data.frame(X2020_Hourly_NO2_for_UCC)
 
 # Convert string date to Date object
 colnames(X2020_Hourly_NO2_for_UCC)[1] <- "Date"
-X2020_Hourly_NO2_for_UCC$Date <- strptime(X2020_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
+X2020_Hourly_NO2_for_UCC$Date <- Date20
+# strptime(X2020_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
 
 # Convert character numbers into double 
 for(i in 2:ncol(X2020_Hourly_NO2_for_UCC)){
@@ -97,15 +104,15 @@ str(X2020_Hourly_NO2_for_UCC)
 
 #########################################################
 
-## Select columns with the missing data less than 25% ##
-X2018_Hourly_NO2_for_UCC <- X2018_Hourly_NO2_for_UCC[,c(T,(nrow(X2018_Hourly_NO2_for_UCC)*0.25 > missing_data_NO2_2018$value))]
-# reduced from 24 columns to  7 columns
-
-X2019_Hourly_NO2_for_UCC <- X2019_Hourly_NO2_for_UCC[,c(T,(nrow(X2019_Hourly_NO2_for_UCC)*0.25 > missing_data_NO2_2019$value))]
-# reduced from 24 columns to  18 columns
-
-X2020_Hourly_NO2_for_UCC <- X2020_Hourly_NO2_for_UCC[,c(T,(nrow(X2020_Hourly_NO2_for_UCC)*0.25 > missing_data_NO2_2020$value))]
-# reduced from 24 columns to  21 columns
+# ## Select columns with the missing data less than 25% ##
+# X2018_Hourly_NO2_for_UCC <- X2018_Hourly_NO2_for_UCC[,c(T,(nrow(X2018_Hourly_NO2_for_UCC)*0.25 > missing_data_NO2_2018$value))]
+# # reduced from 24 columns to  7 columns
+# 
+# X2019_Hourly_NO2_for_UCC <- X2019_Hourly_NO2_for_UCC[,c(T,(nrow(X2019_Hourly_NO2_for_UCC)*0.25 > missing_data_NO2_2019$value))]
+# # reduced from 24 columns to  18 columns
+# 
+# X2020_Hourly_NO2_for_UCC <- X2020_Hourly_NO2_for_UCC[,c(T,(nrow(X2020_Hourly_NO2_for_UCC)*0.25 > missing_data_NO2_2020$value))]
+# # reduced from 24 columns to  21 columns
 
 
 ########### Histogram of all stations ################
