@@ -96,16 +96,19 @@ md_plot_PM10_2020 +
 str(X2020_Hourly_PM10_for_UCC)
 
 #########################################################
+# 
+# ## Select columns with the missing data less than 25% ##
+# X2018_Hourly_PM10_for_UCC <- X2018_Hourly_PM10_for_UCC[,c(T,(nrow(X2018_Hourly_PM10_for_UCC)*0.25 > missing_data_PM10_2018$value))]
+# # reduced from  34 columns to  5 columns
+# 
+# X2019_Hourly_PM10_for_UCC <- X2019_Hourly_PM10_for_UCC[,c(T,(nrow(X2019_Hourly_PM10_for_UCC)*0.25 > missing_data_PM10_2019$value))]
+# # reduced from  34 columns to  21 columns
+# 
+# X2020_Hourly_PM10_for_UCC <- X2020_Hourly_PM10_for_UCC[,c(T,(nrow(X2020_Hourly_PM10_for_UCC)*0.25 > missing_data_PM10_2020$value))]
+# # reduced from  34 columns to  32 columns
 
-## Select columns with the missing data less than 25% ##
-X2018_Hourly_PM10_for_UCC <- X2018_Hourly_PM10_for_UCC[,c(T,(nrow(X2018_Hourly_PM10_for_UCC)*0.25 > missing_data_PM10_2018$value))]
-# reduced from  34 columns to  5 columns
+#########################################################
 
-X2019_Hourly_PM10_for_UCC <- X2019_Hourly_PM10_for_UCC[,c(T,(nrow(X2019_Hourly_PM10_for_UCC)*0.25 > missing_data_PM10_2019$value))]
-# reduced from  34 columns to  21 columns
-
-X2020_Hourly_PM10_for_UCC <- X2020_Hourly_PM10_for_UCC[,c(T,(nrow(X2020_Hourly_PM10_for_UCC)*0.25 > missing_data_PM10_2020$value))]
-# reduced from  34 columns to  32 columns
 
 
 ########### Histogram of all stations ################
@@ -139,41 +142,28 @@ boxplot(X2020_Hourly_PM10_for_UCC[,-1])
 
 
 
-# Check number of NA's
-sum(is.na.data.frame(X2018_Hourly_PM10_for_UCC)) # 4213
-sum(is.na.data.frame(X2019_Hourly_PM10_for_UCC)) # 6409
-sum(is.na.data.frame(X2020_Hourly_PM10_for_UCC)) # 3070
-
-
-# fill NA's with mean values
-for(i in 2:ncol(X2018_Hourly_PM10_for_UCC)){
-  X2018_Hourly_PM10_for_UCC[is.na(X2018_Hourly_PM10_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_PM10_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2018_Hourly_PM10_for_UCC[,i] <- as.double(X2018_Hourly_PM10_for_UCC[,i])
-}
-str(X2018_Hourly_PM10_for_UCC)
-
-for(i in 2:ncol(X2019_Hourly_PM10_for_UCC)){
-  X2019_Hourly_PM10_for_UCC[is.na(X2019_Hourly_PM10_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_PM10_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2019_Hourly_PM10_for_UCC[,i] <- as.double(X2019_Hourly_PM10_for_UCC[,i])
-}
-str(X2019_Hourly_PM10_for_UCC)
-
-for(i in 2:ncol(X2020_Hourly_PM10_for_UCC)){
-  X2020_Hourly_PM10_for_UCC[is.na(X2020_Hourly_PM10_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_PM10_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2020_Hourly_PM10_for_UCC[,i] <- as.double(X2020_Hourly_PM10_for_UCC[,i])
-}
-str(X2020_Hourly_PM10_for_UCC)
-
-
-
-
-
-
-### Find where is the NA value
-# which(is.na(X2020_Hourly_PM10_for_UCC), arr.ind=TRUE)
-# OR
-# library(tidyverse)
-# X2020_Hourly_PM10_for_UCC %>%
-#   rowid_to_column() %>%
-#   filter(is.na(X2020_Hourly_PM10_for_UCC))
-
+# # Check number of NA's
+# sum(is.na.data.frame(X2018_Hourly_PM10_for_UCC)) # 4213
+# sum(is.na.data.frame(X2019_Hourly_PM10_for_UCC)) # 6409
+# sum(is.na.data.frame(X2020_Hourly_PM10_for_UCC)) # 3070
+# 
+# 
+# # fill NA's with mean values
+# for(i in 2:ncol(X2018_Hourly_PM10_for_UCC)){
+#   X2018_Hourly_PM10_for_UCC[is.na(X2018_Hourly_PM10_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_PM10_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2018_Hourly_PM10_for_UCC[,i] <- as.double(X2018_Hourly_PM10_for_UCC[,i])
+# }
+# str(X2018_Hourly_PM10_for_UCC)
+# 
+# for(i in 2:ncol(X2019_Hourly_PM10_for_UCC)){
+#   X2019_Hourly_PM10_for_UCC[is.na(X2019_Hourly_PM10_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_PM10_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2019_Hourly_PM10_for_UCC[,i] <- as.double(X2019_Hourly_PM10_for_UCC[,i])
+# }
+# str(X2019_Hourly_PM10_for_UCC)
+# 
+# for(i in 2:ncol(X2020_Hourly_PM10_for_UCC)){
+#   X2020_Hourly_PM10_for_UCC[is.na(X2020_Hourly_PM10_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_PM10_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2020_Hourly_PM10_for_UCC[,i] <- as.double(X2020_Hourly_PM10_for_UCC[,i])
+# }
+# str(X2020_Hourly_PM10_for_UCC)
+# 

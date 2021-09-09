@@ -6,6 +6,12 @@ library(zoo)
 
 NO_clone <- NO
 
+which(duplicated(NO_clone$Date))
+NO_clone$Date[duplicated(NO_clone$Date)]
+
+# Remove duplicate row from dataframe
+NO_clone <- NO_clone[-8762, ]
+
 str(NO_clone)
 summary(NO_clone)
 
@@ -43,17 +49,17 @@ NO_clone <- NO_clone %>% mutate_all(funs(replace(., .<0, NA)))
 
 summary(NO_clone)
 
-## Date is showing 2 NA values. So we need to handle this situation
-# NO_clone <- na.omit(NO_clone)
-which(is.na(NO_clone$Date))
-# NO_clone <- NO_clone[-c(2138, 10874), ]
-NO_clone[2138,]
-NO_clone[10874,]
-
-NO_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
-NO_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
-
-summary(NO_clone)
+# ## Date is showing 2 NA values. So we need to handle this situation
+# # NO_clone <- na.omit(NO_clone)
+# which(is.na(NO_clone$Date))
+# # NO_clone <- NO_clone[-c(2138, 10874), ]
+# NO_clone[2138,]
+# NO_clone[10874,]
+# 
+# NO_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
+# NO_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
+# 
+# summary(NO_clone)
 
 # Missing data of NO before LOCF(Last Observation Carried Forward)
 missing_data_NO_clone <- data.frame("Station"=colnames(NO_clone[,-1]), "value"=colSums(is.na(NO_clone[,-1])))
@@ -68,6 +74,8 @@ md_plot_NO_clone +
 
 # Last obs. carried forward
 NO_clone <- na.locf(NO_clone, na.rm = F) 
+
+summary(NO_clone)
 
 # Check NA values
 missing_data_NO_clone <- data.frame("Station"=colnames(NO_clone[,-1]), "value"=colSums(is.na(NO_clone[,-1])))

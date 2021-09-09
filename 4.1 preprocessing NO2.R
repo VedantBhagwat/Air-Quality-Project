@@ -5,10 +5,15 @@ library(tidyr)
 library(zoo)
 
 NO2_clone <- NO2
+# write.csv(NO2_clone,"E:\\CIT\\Project\\AQ data\\Export\\NO2_clone.csv", row.names = FALSE)
+which(duplicated(NO2_clone$Date))
+NO2_clone$Date[duplicated(NO2_clone$Date)]
+
+# Remove duplicate row from dataframe
+NO2_clone <- NO2_clone[-8762, ]
 
 str(NO2_clone)
 summary(NO2_clone)
-
 
 ####### Plot Histogram
 
@@ -50,15 +55,15 @@ NO2_clone <- NO2_clone %>% mutate_all(funs(replace(., .<0, NA)))
 
 summary(NO2_clone)
 
-## Date is showing 2 NA values. So we need to handle this situation
-# NO2_clone <- na.omit(NO2_clone)
-which(is.na(NO2_clone$Date))
-# NO2_clone <- NO2_clone[-c(2138, 10874), ]
-NO2_clone[2138,]
-NO2_clone[10874,]
-
-NO2_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
-NO2_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
+# ## Date is showing 2 NA values. So we need to handle this situation
+# # NO2_clone <- na.omit(NO2_clone)
+# which(is.na(NO2_clone$Date))
+# # NO2_clone <- NO2_clone[-c(2138, 10874), ]
+# NO2_clone[2138,]
+# NO2_clone[10874,]
+# 
+# NO2_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
+# NO2_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
 
 summary(NO2_clone)
 
@@ -74,7 +79,7 @@ md_plot_NO2_clone +
   ggtitle("Missing data of NO2 before LOCF(Last Observation Carried Forward)")
 
 # Last obs. carried forward
-NO2_clone <- na.locf(NO2_clone, na.rm = F) 
+NO2_clone[,-1] <- na.locf(NO2_clone[,-1], na.rm = F) 
 
 # Check NA values
 missing_data_NO2_clone <- data.frame("Station"=colnames(NO2_clone[,-1]), "value"=colSums(is.na(NO2_clone[,-1])))

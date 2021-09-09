@@ -6,6 +6,12 @@ library(zoo)
 
 PM10_clone <- PM10
 
+which(duplicated(PM10_clone$Date))
+PM10_clone$Date[duplicated(PM10_clone$Date)]
+
+# Remove duplicate row from dataframe
+PM10_clone <- PM10_clone[-8762, ]
+
 str(PM10_clone)
 summary(PM10_clone)
 
@@ -43,17 +49,17 @@ PM10_clone <- PM10_clone %>% mutate_all(funs(replace(., .<0, NA)))
 
 summary(PM10_clone)
 
-## Date is showing 2 NA values. So we need to handle this situation
-# PM10_clone <- na.omit(PM10_clone)
-which(is.na(PM10_clone$Date))
-# PM10_clone <- PM10_clone[-c(2138, 10874), ]
-PM10_clone[2138,]
-PM10_clone[10874,]
-
-PM10_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
-PM10_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
-
-summary(PM10_clone)
+# ## Date is showing 2 NA values. So we need to handle this situation
+# # PM10_clone <- na.omit(PM10_clone)
+# which(is.na(PM10_clone$Date))
+# # PM10_clone <- PM10_clone[-c(2138, 10874), ]
+# PM10_clone[2138,]
+# PM10_clone[10874,]
+# 
+# PM10_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
+# PM10_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
+# 
+# summary(PM10_clone)
 
 # Missing data of PM10 before LOCF(Last Observation Carried Forward)
 missing_data_PM10_clone <- data.frame("Station"=colnames(PM10_clone[,-1]), "value"=colSums(is.na(PM10_clone[,-1])))

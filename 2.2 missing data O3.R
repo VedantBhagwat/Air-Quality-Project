@@ -95,17 +95,24 @@ md_plot_O3_2020 +
 
 str(X2020_Hourly_O3_for_UCC)
 
+
+
+
+
+
 #########################################################
+# 
+# ## Select columns with the missing data less than 25% ##
+# X2018_Hourly_O3_for_UCC <- X2018_Hourly_O3_for_UCC[,c(T,(nrow(X2018_Hourly_O3_for_UCC)*0.25 > missing_data_O3_2018$value))]
+# # reduced from  19 columns to  4 columns
+# 
+# X2019_Hourly_O3_for_UCC <- X2019_Hourly_O3_for_UCC[,c(T,(nrow(X2019_Hourly_O3_for_UCC)*0.25 > missing_data_O3_2019$value))]
+# # reduced from  19 columns to  15 columns
+# 
+# X2020_Hourly_O3_for_UCC <- X2020_Hourly_O3_for_UCC[,c(T,(nrow(X2020_Hourly_O3_for_UCC)*0.25 > missing_data_O3_2020$value))]
+# # reduced from  19 columns to  19 columns
 
-## Select columns with the missing data less than 25% ##
-X2018_Hourly_O3_for_UCC <- X2018_Hourly_O3_for_UCC[,c(T,(nrow(X2018_Hourly_O3_for_UCC)*0.25 > missing_data_O3_2018$value))]
-# reduced from  19 columns to  4 columns
-
-X2019_Hourly_O3_for_UCC <- X2019_Hourly_O3_for_UCC[,c(T,(nrow(X2019_Hourly_O3_for_UCC)*0.25 > missing_data_O3_2019$value))]
-# reduced from  19 columns to  15 columns
-
-X2020_Hourly_O3_for_UCC <- X2020_Hourly_O3_for_UCC[,c(T,(nrow(X2020_Hourly_O3_for_UCC)*0.25 > missing_data_O3_2020$value))]
-# reduced from  19 columns to  19 columns
+#########################################################
 
 
 ########### Histogram of all stations ################
@@ -139,41 +146,28 @@ boxplot(X2020_Hourly_O3_for_UCC[,-1])
 
 
 
-# Check number of NA's
-sum(is.na.data.frame(X2018_Hourly_O3_for_UCC)) # 1441
-sum(is.na.data.frame(X2019_Hourly_O3_for_UCC)) # 5074
-sum(is.na.data.frame(X2020_Hourly_O3_for_UCC)) # 2224
-
-
-# fill NA's with mean values
-for(i in 2:ncol(X2018_Hourly_O3_for_UCC)){
-  X2018_Hourly_O3_for_UCC[is.na(X2018_Hourly_O3_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_O3_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2018_Hourly_O3_for_UCC[,i] <- as.double(X2018_Hourly_O3_for_UCC[,i])
-}
-str(X2018_Hourly_O3_for_UCC)
-
-for(i in 2:ncol(X2019_Hourly_O3_for_UCC)){
-  X2019_Hourly_O3_for_UCC[is.na(X2019_Hourly_O3_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_O3_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2019_Hourly_O3_for_UCC[,i] <- as.double(X2019_Hourly_O3_for_UCC[,i])
-}
-str(X2019_Hourly_O3_for_UCC)
-
-for(i in 2:ncol(X2020_Hourly_O3_for_UCC)){
-  X2020_Hourly_O3_for_UCC[is.na(X2020_Hourly_O3_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_O3_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2020_Hourly_O3_for_UCC[,i] <- as.double(X2020_Hourly_O3_for_UCC[,i])
-}
-str(X2020_Hourly_O3_for_UCC)
-
-
-
-
-
-
-### Find where is the NA value
-# which(is.na(X2020_Hourly_O3_for_UCC), arr.ind=TRUE)
-# OR
-# library(tidyverse)
-# X2020_Hourly_O3_for_UCC %>%
-#   rowid_to_column() %>%
-#   filter(is.na(X2020_Hourly_O3_for_UCC))
-
+# # Check number of NA's
+# sum(is.na.data.frame(X2018_Hourly_O3_for_UCC)) # 1441
+# sum(is.na.data.frame(X2019_Hourly_O3_for_UCC)) # 5074
+# sum(is.na.data.frame(X2020_Hourly_O3_for_UCC)) # 2224
+# 
+# 
+# # fill NA's with mean values
+# for(i in 2:ncol(X2018_Hourly_O3_for_UCC)){
+#   X2018_Hourly_O3_for_UCC[is.na(X2018_Hourly_O3_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_O3_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2018_Hourly_O3_for_UCC[,i] <- as.double(X2018_Hourly_O3_for_UCC[,i])
+# }
+# str(X2018_Hourly_O3_for_UCC)
+# 
+# for(i in 2:ncol(X2019_Hourly_O3_for_UCC)){
+#   X2019_Hourly_O3_for_UCC[is.na(X2019_Hourly_O3_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_O3_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2019_Hourly_O3_for_UCC[,i] <- as.double(X2019_Hourly_O3_for_UCC[,i])
+# }
+# str(X2019_Hourly_O3_for_UCC)
+# 
+# for(i in 2:ncol(X2020_Hourly_O3_for_UCC)){
+#   X2020_Hourly_O3_for_UCC[is.na(X2020_Hourly_O3_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_O3_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2020_Hourly_O3_for_UCC[,i] <- as.double(X2020_Hourly_O3_for_UCC[,i])
+# }
+# str(X2020_Hourly_O3_for_UCC)
+# 

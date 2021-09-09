@@ -6,6 +6,12 @@ library(zoo)
 
 O3_clone <- O3
 
+which(duplicated(O3_clone$Date))
+O3_clone$Date[duplicated(O3_clone$Date)]
+
+# Remove duplicate row from dataframe
+O3_clone <- O3_clone[-8762, ]
+
 str(O3_clone)
 summary(O3_clone)
 
@@ -43,15 +49,15 @@ O3_clone <- O3_clone %>% mutate_all(funs(replace(., .<0, NA)))
 
 summary(O3_clone)
 
-## Date is showing 2 NA values. So we need to handle this situation
-# O3_clone <- na.omit(O3_clone)
-which(is.na(O3_clone$Date))
-# O3_clone <- O3_clone[-c(2138, 10874), ]
-O3_clone[2138,]
-O3_clone[10874,]
-
-O3_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
-O3_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
+# ## Date is showing 2 NA values. So we need to handle this situation
+# # O3_clone <- na.omit(O3_clone)
+# which(is.na(O3_clone$Date))
+# # O3_clone <- O3_clone[-c(2138, 10874), ]
+# O3_clone[2138,]
+# O3_clone[10874,]
+# 
+# O3_clone[2138,]$Date <- as.POSIXct("2019-03-31 01:00:00")
+# O3_clone[10874,]$Date <- as.POSIXct("2020-03-29 01:00:00")
 
 summary(O3_clone)
 
@@ -67,7 +73,7 @@ md_plot_O3_clone +
   ggtitle("Missing data of O3 before LOCF(Last Observation Carried Forward)")
 
 # Last obs. carried forward
-O3_clone <- na.locf(O3_clone, na.rm = F) 
+O3_clone[,-1] <- na.locf(O3_clone[,-1], na.rm = F) 
 
 # Check NA values
 missing_data_O3_clone <- data.frame("Station"=colnames(O3_clone[,-1]), "value"=colSums(is.na(O3_clone[,-1])))

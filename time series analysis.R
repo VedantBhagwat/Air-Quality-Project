@@ -45,7 +45,7 @@ NO2_combined %>%
   plot_time_series(as.Date(Date), value, 
                    .facet_ncol = 5, .facet_scales = "free",
                    .interactive = interactive,
-                   .title = "Time Series Plot of NO2 in 2019 and 2020")
+                   .title = "Time Series Plot of NO2 in 2018, 2019 and 2020")
 
 NO_combined %>%
   group_by(values) %>%

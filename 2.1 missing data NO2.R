@@ -1,7 +1,10 @@
-Date19 <- seq(as.POSIXct("2019-01-01 00:00:00"), as.POSIXct("2019-12-31 24:00:00"), by="hour")
-Date20 <- seq(as.POSIXct("2020-01-01 00:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
-Date <- seq(as.POSIXct("2018-12-31 24:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+# Date19 <- seq(as.POSIXct("2019-01-01 00:00:00"), as.POSIXct("2019-12-31 24:00:00"), by="hour")
+# Date20 <- seq(as.POSIXct("2020-01-01 00:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+# Date <- seq(as.POSIXct("2018-12-31 24:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
 
+# Date <- seq(as.POSIXct("2018-01-01 00:00:00"), as.POSIXct("2020-06-27 15:00:00"), by="hour")
+# View(Date)
+# View(NO2)
 
 ########### 2018 NO2
 library(ggplot2)
@@ -48,7 +51,8 @@ X2019_Hourly_NO2_for_UCC <- data.frame(X2019_Hourly_NO2_for_UCC)
 
 # Convert string date to Date object
 colnames(X2019_Hourly_NO2_for_UCC)[1] <- "Date"
-X2019_Hourly_NO2_for_UCC$Date <- Date19
+X2019_Hourly_NO2_for_UCC$Date <- strptime(X2019_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
+# Date19
 # strptime(X2019_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
 
 # Convert character numbers into double 
@@ -81,7 +85,8 @@ X2020_Hourly_NO2_for_UCC <- data.frame(X2020_Hourly_NO2_for_UCC)
 
 # Convert string date to Date object
 colnames(X2020_Hourly_NO2_for_UCC)[1] <- "Date"
-X2020_Hourly_NO2_for_UCC$Date <- Date20
+X2020_Hourly_NO2_for_UCC$Date <- strptime(X2020_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
+# Date20
 # strptime(X2020_Hourly_NO2_for_UCC$Date, format="%d/%m/%Y %H:%M")
 
 # Convert character numbers into double 
@@ -101,6 +106,9 @@ md_plot_NO2_2020 +
   ggtitle("Missing data of NO2 in 2020")
 
 str(X2020_Hourly_NO2_for_UCC)
+
+
+
 
 #########################################################
 
@@ -144,55 +152,45 @@ boxplot(X2019_Hourly_NO2_for_UCC[,-1])
 # Some negative values present in 2018 and 2019
 boxplot(X2020_Hourly_NO2_for_UCC[,-1])
 
-test_2018_Hourly_NO2_for_UCC <- X2018_Hourly_NO2_for_UCC
-
-X2018_Hourly_NO2_for_UCC[X2018_Hourly_NO2_for_UCC$Dundalk>150,]
 
 
-
-
-test_2018_Hourly_NO2_for_UCC[5748,5] <- NA
-test_2018_Hourly_NO2_for_UCC[2411,2] <- NA
-
-summary(test_2018_Hourly_NO2_for_UCC)
-
-boxplot(test_2018_Hourly_NO2_for_UCC[,-1])
-
-test_2018_Hourly_NO2_for_UCC[5748,]
-# Check number of NA's
-sum(is.na.data.frame(X2018_Hourly_NO2_for_UCC)) # 2808
-sum(is.na.data.frame(X2019_Hourly_NO2_for_UCC)) # 6162
-sum(is.na.data.frame(X2020_Hourly_NO2_for_UCC)) # 2881
-
-# fill NA's with mean values
-for(i in 2:ncol(X2018_Hourly_NO2_for_UCC)){
-  X2018_Hourly_NO2_for_UCC[is.na(X2018_Hourly_NO2_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_NO2_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2018_Hourly_NO2_for_UCC[,i] <- as.double(X2018_Hourly_NO2_for_UCC[,i])
-}
-str(X2018_Hourly_NO2_for_UCC)
-
-for(i in 2:ncol(X2019_Hourly_NO2_for_UCC)){
-  X2019_Hourly_NO2_for_UCC[is.na(X2019_Hourly_NO2_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_NO2_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2019_Hourly_NO2_for_UCC[,i] <- as.double(X2019_Hourly_NO2_for_UCC[,i])
-}
-str(X2019_Hourly_NO2_for_UCC)
-
-for(i in 2:ncol(X2020_Hourly_NO2_for_UCC)){
-  X2020_Hourly_NO2_for_UCC[is.na(X2020_Hourly_NO2_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_NO2_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
-  X2020_Hourly_NO2_for_UCC[,i] <- as.double(X2020_Hourly_NO2_for_UCC[,i])
-}
-str(X2020_Hourly_NO2_for_UCC)
-
-
-
-
-
-
-### Find where is the NA value
-# which(is.na(X2020_Hourly_NO2_for_UCC), arr.ind=TRUE)
-# OR
-# library(tidyverse)
-# X2020_Hourly_NO2_for_UCC %>%
-#   rowid_to_column() %>%
-#   filter(is.na(X2020_Hourly_NO2_for_UCC))
-
+# test_2018_Hourly_NO2_for_UCC <- X2018_Hourly_NO2_for_UCC
+# 
+# X2018_Hourly_NO2_for_UCC[X2018_Hourly_NO2_for_UCC$Dundalk>150,]
+# 
+# 
+# 
+# 
+# test_2018_Hourly_NO2_for_UCC[5748,5] <- NA
+# test_2018_Hourly_NO2_for_UCC[2411,2] <- NA
+# 
+# summary(test_2018_Hourly_NO2_for_UCC)
+# 
+# boxplot(test_2018_Hourly_NO2_for_UCC[,-1])
+# 
+# test_2018_Hourly_NO2_for_UCC[5748,]
+# # Check number of NA's
+# sum(is.na.data.frame(X2018_Hourly_NO2_for_UCC)) # 2808
+# sum(is.na.data.frame(X2019_Hourly_NO2_for_UCC)) # 6162
+# sum(is.na.data.frame(X2020_Hourly_NO2_for_UCC)) # 2881
+# 
+# # fill NA's with mean values
+# for(i in 2:ncol(X2018_Hourly_NO2_for_UCC)){
+#   X2018_Hourly_NO2_for_UCC[is.na(X2018_Hourly_NO2_for_UCC[,i]), i] <- format(round(mean(X2018_Hourly_NO2_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2018_Hourly_NO2_for_UCC[,i] <- as.double(X2018_Hourly_NO2_for_UCC[,i])
+# }
+# str(X2018_Hourly_NO2_for_UCC)
+# 
+# for(i in 2:ncol(X2019_Hourly_NO2_for_UCC)){
+#   X2019_Hourly_NO2_for_UCC[is.na(X2019_Hourly_NO2_for_UCC[,i]), i] <- format(round(mean(X2019_Hourly_NO2_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2019_Hourly_NO2_for_UCC[,i] <- as.double(X2019_Hourly_NO2_for_UCC[,i])
+# }
+# str(X2019_Hourly_NO2_for_UCC)
+# 
+# for(i in 2:ncol(X2020_Hourly_NO2_for_UCC)){
+#   X2020_Hourly_NO2_for_UCC[is.na(X2020_Hourly_NO2_for_UCC[,i]), i] <- format(round(mean(X2020_Hourly_NO2_for_UCC[,i], na.rm = TRUE), 2), nsmall = 2)
+#   X2020_Hourly_NO2_for_UCC[,i] <- as.double(X2020_Hourly_NO2_for_UCC[,i])
+# }
+# str(X2020_Hourly_NO2_for_UCC)
+# 
+# 
